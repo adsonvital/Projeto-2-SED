@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE nta PUBLIC '-//Uppaal Team//DTD Flat System 1.6//EN' 'http://www.it.uu.se/research/group/darts/uppaal/flat-1_6.dtd'>
+<nta>
+	<declaration>// Place global declarations here.
+broadcast chan t12,t23,t34,t41;
+clock geral;
+bool verde1=1,verde2=1;
+</declaration>
+	<template>
+		<name>Carro</name>
+		<declaration>clock y;</declaration>
+		<location id="id0" x="-365" y="-153">
+			<name x="-408" y="-187">inicio_fim</name>
+		</location>
+		<location id="id1" x="-246" y="-153">
+			<name x="-272" y="-144">Pronto</name>
+			<urgent/>
+		</location>
+		<location id="id2" x="-161" y="-153">
+			<name x="-187" y="-144">Primeiro</name>
+		</location>
+		<location id="id3" x="-8" y="-153">
+			<name x="-42" y="-187">segundo</name>
+		</location>
+		<location id="id4" x="-8" y="-34">
+			<name x="-42" y="-25">terceiro</name>
+		</location>
+		<location id="id5" x="-246" y="-34">
+			<name x="-272" y="-25">quarto</name>
+		</location>
+		<init ref="id0"/>
+		<transition id="id6">
+			<source ref="id5"/>
+			<target ref="id0"/>
+		</transition>
+		<transition id="id7">
+			<source ref="id4"/>
+			<target ref="id5"/>
+			<label kind="guard" x="-178" y="-68">verde2==1</label>
+			<label kind="synchronisation" x="-153" y="-51">t41?</label>
+		</transition>
+		<transition id="id8">
+			<source ref="id3"/>
+			<target ref="id4"/>
+			<label kind="guard" x="-8" y="-127">verde1==1</label>
+			<label kind="synchronisation" x="-8" y="-110">t23?</label>
+		</transition>
+		<transition id="id9">
+			<source ref="id2"/>
+			<target ref="id3"/>
+			<label kind="guard" x="-127" y="-178">verde2==1</label>
+			<label kind="synchronisation" x="-110" y="-153">t41?</label>
+		</transition>
+		<transition id="id10">
+			<source ref="id1"/>
+			<target ref="id2"/>
+			<label kind="guard" x="-255" y="-187">verde1==1</label>
+			<label kind="synchronisation" x="-228" y="-170">t23?</label>
+		</transition>
+		<transition id="id11">
+			<source ref="id0"/>
+			<target ref="id1"/>
+		</transition>
+	</template>
+	<template>
+		<name>s1</name>
+		<parameter>bool &amp;verde</parameter>
+		<location id="id12" x="-119" y="-17" color="#00ff00">
+			<name x="-144" y="-51">Verde</name>
+		</location>
+		<location id="id13" x="-8" y="-17" color="#ffff00">
+			<name x="-42" y="-51">Amarelo</name>
+		</location>
+		<location id="id14" x="-59" y="42" color="#ff0000">
+			<name x="-93" y="51">Vermelho</name>
+		</location>
+		<init ref="id12"/>
+		<transition id="id15">
+			<source ref="id14"/>
+			<target ref="id12"/>
+			<label kind="synchronisation" x="-127" y="8">t41?</label>
+			<label kind="assignment" x="-153" y="25">verde=1</label>
+		</transition>
+		<transition id="id16">
+			<source ref="id13"/>
+			<target ref="id14"/>
+			<label kind="synchronisation" x="-25" y="0">t34?</label>
+			<label kind="assignment" x="-33" y="12">verde=0</label>
+		</transition>
+		<transition id="id17">
+			<source ref="id12"/>
+			<target ref="id13"/>
+			<label kind="synchronisation" x="-85" y="-51">t23?</label>
+			<label kind="assignment" x="-102" y="-34">verde=1</label>
+		</transition>
+	</template>
+	<template>
+		<name>s2</name>
+		<parameter>bool &amp;verde</parameter>
+		<declaration>clock u;</declaration>
+		<location id="id18" x="-59" y="42" color="#ff0000">
+			<name x="-93" y="51">Vermelho</name>
+		</location>
+		<location id="id19" x="-119" y="-17" color="#00ff00">
+			<name x="-144" y="-51">Verde</name>
+		</location>
+		<location id="id20" x="-8" y="-17" color="#ffff00">
+			<name x="-42" y="-51">Amarelo</name>
+		</location>
+		<init ref="id20"/>
+		<transition id="id21">
+			<source ref="id18"/>
+			<target ref="id19"/>
+			<label kind="synchronisation" x="-136" y="0">t23?</label>
+			<label kind="assignment" x="-161" y="17">verde=1</label>
+		</transition>
+		<transition id="id22">
+			<source ref="id20"/>
+			<target ref="id18"/>
+			<label kind="synchronisation" x="-25" y="0">t12?</label>
+			<label kind="assignment" x="-34" y="17">verde=0</label>
+		</transition>
+		<transition id="id23">
+			<source ref="id19"/>
+			<target ref="id20"/>
+			<label kind="synchronisation" x="-85" y="-51">t41?</label>
+			<label kind="assignment" x="-102" y="-34">verde=1</label>
+		</transition>
+	</template>
+	<template>
+		<name x="5" y="5">controlador</name>
+		<declaration>// Place local declarations here.
+clock y;</declaration>
+		<location id="id24" x="-136" y="-8">
+			<name x="-146" y="-42">t1</name>
+		</location>
+		<location id="id25" x="17" y="-8">
+			<name x="7" y="-42">t2</name>
+		</location>
+		<location id="id26" x="17" y="76">
+			<name x="8" y="93">t3</name>
+		</location>
+		<location id="id27" x="-136" y="76">
+		</location>
+		<init ref="id24"/>
+		<transition id="id28">
+			<source ref="id27"/>
+			<target ref="id24"/>
+			<label kind="guard" x="-204" y="17">y&gt;=26</label>
+			<label kind="synchronisation" x="-178" y="34">t41!</label>
+			<label kind="assignment" x="-187" y="51">y=0</label>
+		</transition>
+		<transition id="id29">
+			<source ref="id26"/>
+			<target ref="id27"/>
+			<label kind="guard" x="-68" y="76">y&gt;=5</label>
+			<label kind="synchronisation" x="-59" y="93">t34!</label>
+		</transition>
+		<transition id="id30">
+			<source ref="id25"/>
+			<target ref="id26"/>
+			<label kind="guard" x="25" y="8">y&gt;=26</label>
+			<label kind="synchronisation" x="51" y="25">t23!</label>
+		</transition>
+		<transition id="id31">
+			<source ref="id24"/>
+			<target ref="id25"/>
+			<label kind="guard" x="-85" y="-42">y&gt;=5</label>
+			<label kind="synchronisation" x="-76" y="-25">t12!</label>
+		</transition>
+	</template>
+	<system>// Place template instantiations here.
+
+// List one or more processes to be composed into a system.
+
+
+sema1= s1(verde1);
+sema2=s2(verde2);
+sema3=s1(verde1);
+sema4= s2(verde2);
+carro1=Carro();
+
+controlador1= controlador();
+
+system controlador1, sema1,sema2,sema3,sema4, carro1;
+</system>
+	<queries>
+		<query>
+			<formula/>
+			<comment/>
+		</query>
+	</queries>
+</nta>
